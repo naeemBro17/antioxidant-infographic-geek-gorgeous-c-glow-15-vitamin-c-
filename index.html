@@ -34,17 +34,64 @@
     color: #c9a96e; margin-bottom: 28px;
   }
   .bars-wrap {
-    display: flex; align-items: flex-end; gap: 20px;
+    display: flex; align-items: flex-end; justify-content: center; gap: 32px;
     height: 240px; border-bottom: 1px solid rgba(255,255,255,0.1);
     margin-bottom: 12px;
   }
-  .bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; }
+  .bar-group { display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; }
   .bar-value { font-size: 26px; font-weight: 300; color: #f5f0e8; margin-bottom: 32px; line-height: 1; }
   .bar-value span { font-size: 15px; color: #c9a96e; }
-  .bar { width: 100%; border-radius: 7px 7px 0 0; position: relative; }
-  .bar-1 { height: 60px;  background: linear-gradient(180deg, #e8c97a 0%, #b89040 100%); }
-  .bar-2 { height: 120px; background: linear-gradient(180deg, #e07a5f 0%, #b04535 100%); }
-  .bar-3 { height: 240px; background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%); }
+
+  /* Slim bar sizing */
+  .bar {
+    width: 72px;
+    max-width: 72px;
+    border-radius: 7px 7px 0 0;
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: pointer;
+    transform-origin: bottom center;
+  }
+
+  /* Entrance animation keyframes */
+  @keyframes growUp {
+    from { transform: scaleY(0); opacity: 0; }
+    to   { transform: scaleY(1); opacity: 1; }
+  }
+
+  .bar-1 {
+    height: 60px;
+    background: linear-gradient(180deg, #e8c97a 0%, #b89040 100%);
+    transform-origin: bottom center;
+    animation: growUp 0.7s cubic-bezier(0.34, 1.2, 0.64, 1) 0.1s both;
+  }
+  .bar-2 {
+    height: 120px;
+    background: linear-gradient(180deg, #e07a5f 0%, #b04535 100%);
+    transform-origin: bottom center;
+    animation: growUp 0.7s cubic-bezier(0.34, 1.2, 0.64, 1) 0.3s both;
+  }
+  .bar-3 {
+    height: 240px;
+    background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%);
+    transform-origin: bottom center;
+    animation: growUp 0.7s cubic-bezier(0.34, 1.2, 0.64, 1) 0.5s both;
+  }
+
+  /* Hover + touch glow — color-matched per bar */
+  .bar-1:hover, .bar-1:active {
+    transform: scaleX(1.05) scaleY(1.02);
+    box-shadow: 0 0 22px 6px rgba(232, 201, 122, 0.45), 0 0 8px 2px rgba(232, 201, 122, 0.25);
+  }
+  .bar-2:hover, .bar-2:active {
+    transform: scaleX(1.05) scaleY(1.02);
+    box-shadow: 0 0 22px 6px rgba(224, 122, 95, 0.45), 0 0 8px 2px rgba(224, 122, 95, 0.25);
+  }
+  .bar-3:hover, .bar-3:active {
+    transform: scaleX(1.05) scaleY(1.02);
+    box-shadow: 0 0 22px 6px rgba(167, 139, 250, 0.5), 0 0 8px 2px rgba(167, 139, 250, 0.3);
+  }
+
   .bar-badge {
     position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
     font-size: 10px; background: rgba(255,255,255,0.08);
@@ -52,6 +99,14 @@
     padding: 3px 9px; white-space: nowrap; color: #f0ece4; font-family: sans-serif;
   }
   .bar-label { margin-top: 12px; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #7a7068; text-align: center; line-height: 1.6; font-family: sans-serif; }
+
+  /* Mobile: keep bars slim, no overflow */
+  @media (max-width: 480px) {
+    .bars-wrap { gap: 16px; }
+    .bar { width: 48px; max-width: 48px; }
+    .bar-badge { font-size: 9px; padding: 2px 6px; }
+    .bar-label { font-size: 9px; }
+  }
 
   /* CARDS */
   .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px; }
